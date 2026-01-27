@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Button from '@/components/ui/Button';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, Check, X } from 'lucide-react';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -13,8 +13,28 @@ export default function ContactForm() {
     tier: '',
     message: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const validateEmail = (email: string): boolean => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'name':
+        return value.trim().length < 2 ? 'Le nom doit contenir au moins 2 caractères' : '';
+      case 'email':
+        return !validateEmail(value) ? 'Email invalide' : '';
+      case 'message':
+        return value.trim().length < 10 ? 'Le message doit contenir au moins 10 caractères' : '';
+      default:
+        return '';
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,10 +62,26 @@ export default function ContactForm() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: '',
+      });
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setTouched({ ...touched, [name]: true });
+    const error = validateField(name, value);
+    setErrors({ ...errors, [name]: error });
   };
 
   if (isSubmitted) {
@@ -69,15 +105,36 @@ export default function ContactForm() {
           <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
             Nom / Prénom *
           </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-royal focus:border-royal outline-none transition"
-          />
+          <div className="relative">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={`w-full px-4 py-3 pr-10 border rounded-lg focus:ring-2 outline-none transition ${
+                touched.name && errors.name
+                  ? 'border-red-500 focus:ring-red-400'
+                  : touched.name && !errors.name && formData.name
+                  ? 'border-green-500 focus:ring-green-400'
+                  : 'border-gray-300 focus:ring-royal focus:border-royal'
+              }`}
+            />
+            {touched.name && formData.name && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                {errors.name ? (
+                  <X className="w-5 h-5 text-red-500" />
+                ) : (
+                  <Check className="w-5 h-5 text-green-500" />
+                )}
+              </div>
+            )}
+          </div>
+          {touched.name && errors.name && (
+            <p className="text-sm text-red-600 mt-1">{errors.name}</p>
+          )}
         </div>
         
         <div>
@@ -100,15 +157,36 @@ export default function ContactForm() {
           <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
             Email *
           </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-royal focus:border-royal outline-none transition"
-          />
+          <div className="relative">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={`w-full px-4 py-3 pr-10 border rounded-lg focus:ring-2 outline-none transition ${
+                touched.email && errors.email
+                  ? 'border-red-500 focus:ring-red-400'
+                  : touched.email && !errors.email && formData.email
+                  ? 'border-green-500 focus:ring-green-400'
+                  : 'border-gray-300 focus:ring-royal focus:border-royal'
+              }`}
+            />
+            {touched.email && formData.email && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                {errors.email ? (
+                  <X className="w-5 h-5 text-red-500" />
+                ) : (
+                  <Check className="w-5 h-5 text-green-500" />
+                )}
+              </div>
+            )}
+          </div>
+          {touched.email && errors.email && (
+            <p className="text-sm text-red-600 mt-1">{errors.email}</p>
+          )}
         </div>
         
         <div>
@@ -150,16 +228,28 @@ export default function ContactForm() {
         <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
           Message *
         </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows={6}
-          value={formData.message}
-          onChange={handleChange}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-royal focus:border-royal outline-none transition resize-none"
-          placeholder="Présentez votre entreprise et votre intérêt pour un partenariat..."
-        />
+        <div className="relative">
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows={6}
+            value={formData.message}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition resize-none ${
+              touched.message && errors.message
+                ? 'border-red-500 focus:ring-red-400'
+                : touched.message && !errors.message && formData.message
+                ? 'border-green-500 focus:ring-green-400'
+                : 'border-gray-300 focus:ring-royal focus:border-royal'
+            }`}
+            placeholder="Présentez votre entreprise et votre intérêt pour un partenariat..."
+          />
+        </div>
+        {touched.message && errors.message && (
+          <p className="text-sm text-red-600 mt-1">{errors.message}</p>
+        )}
       </div>
 
       <Button 

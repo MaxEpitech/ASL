@@ -3,6 +3,8 @@ import Section from '@/components/ui/Section';
 import Container from '@/components/ui/Container';
 import SponsoringTiers from '@/components/sponsoring/SponsoringTiers';
 import ContactForm from '@/components/sponsoring/ContactForm';
+import FiscalCalculator from '@/components/sponsoring/FiscalCalculator';
+import FadeIn from '@/components/animations/FadeIn';
 import MediaGallery from '@/components/ui/MediaGallery';
 import { Handshake, TrendingUp, Users, Award } from 'lucide-react';
 import { sponsorImages } from '@/data/media';
@@ -90,6 +92,23 @@ export default function SponsoringPage() {
           </div>
           
           <SponsoringTiers />
+        </Container>
+      </Section>
+
+      {/* Fiscal Calculator */}
+      <Section background="white">
+        <Container>
+          <FadeIn>
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="text-royal mb-4">Calculez Votre Avantage Fiscal</h2>
+                <p className="text-xl text-gray-600">
+                  Découvrez combien votre partenariat vous coûtera réellement après réduction d&apos;impôt
+                </p>
+              </div>
+              <FiscalCalculator />
+            </div>
+          </FadeIn>
         </Container>
       </Section>
 

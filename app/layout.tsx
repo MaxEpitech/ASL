@@ -3,6 +3,7 @@ import { Inter, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import StickyButton from "@/components/ui/StickyButton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,6 +43,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <StickyButton text="Demander un devis" href="mailto:contact@asl-jeuxecossais.fr" />
       </body>
     </html>
   );

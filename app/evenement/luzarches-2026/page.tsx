@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Section from '@/components/ui/Section';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
+import Countdown from '@/components/ui/Countdown';
+import FadeIn from '@/components/animations/FadeIn';
 import { Calendar, MapPin, Clock, Ticket, Car, Train, Info, Trophy } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -10,18 +12,27 @@ export const metadata: Metadata = {
 };
 
 export default function EventPage() {
+  const eventDate = new Date('2026-09-27T10:00:00');
+
   return (
     <>
       {/* Hero */}
       <Section background="forest">
         <Container>
-          <div className="text-center text-white">
-            <h1 className="mb-6">Highland Games Luzarches 2026</h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-              Une journée exceptionnelle de compétitions, démonstrations et animations 
-              pour toute la famille au cœur du Val-d&apos;Oise
-            </p>
-          </div>
+          <FadeIn>
+            <div className="text-center text-white">
+              <h1 className="mb-6">Highland Games Luzarches 2026</h1>
+              <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-10">
+                Une journée exceptionnelle de compétitions, démonstrations et animations 
+                pour toute la famille au cœur du Val-d&apos;Oise
+              </p>
+              
+              <div className="mb-8">
+                <p className="text-2xl font-serif mb-4">L&apos;événement commence dans :</p>
+                <Countdown targetDate={eventDate} />
+              </div>
+            </div>
+          </FadeIn>
         </Container>
       </Section>
 

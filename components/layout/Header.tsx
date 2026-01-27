@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import Container from '@/components/ui/Container';
@@ -22,9 +23,14 @@ export default function Header() {
         <nav className="flex items-center justify-between py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="text-2xl font-serif font-bold text-royal">
-              ASL <span className="text-forest">Jeux Écossais</span>
-            </span>
+            <Image
+              src="/images/Logo.png"
+              alt="ASL Jeux Écossais"
+              width={180}
+              height={60}
+              className="h-12 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
