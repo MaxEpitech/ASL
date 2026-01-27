@@ -7,8 +7,8 @@ import Button from '@/components/ui/Button';
 const services = [
   {
     icon: Castle,
-    title: 'Démonstrations Publiques',
-    description: 'Spectacles captivants pour festivals, fêtes médiévales et événements municipaux.',
+    title: 'Démonstrations / Initiations Publiques',
+    description: 'Démonstrations et initiations pour festivals, fêtes médiévales et événements municipaux.',
     href: '/prestations#demonstrations-publiques',
   },
   {

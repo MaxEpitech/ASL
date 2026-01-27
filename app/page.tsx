@@ -32,29 +32,25 @@ export default function Home() {
       <Section background="royal">
         <Container>
           <div className="text-center">
-            <h2 className="text-white mb-6">Événement Luzarches 2025</h2>
+            <h2 className="text-white mb-6">Événement Luzarches 2026</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
               Rejoignez-nous pour une journée inoubliable de Highland Games, 
               compétitions traditionnelles et animations pour toute la famille !
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 max-w-4xl mx-auto">
               <div className="flex items-center justify-center gap-3 text-white">
                 <Calendar className="w-6 h-6" />
-                <span className="font-sans text-lg">Juin 2025</span>
+                <span className="font-sans text-lg">27 Septembre 2026</span>
               </div>
               <div className="flex items-center justify-center gap-3 text-white">
                 <MapPin className="w-6 h-6" />
                 <span className="font-sans text-lg">Luzarches, France</span>
               </div>
-              <div className="flex items-center justify-center gap-3 text-white">
-                <Ticket className="w-6 h-6" />
-                <span className="font-sans text-lg">Billetterie ouverte</span>
-              </div>
             </div>
 
-            <Link href="/evenement/luzarches-2025">
-              <Button className="bg-white text-royal hover:bg-gray-100">
+            <Link href="/evenement/luzarches-2026">
+              <Button className="bg-white text-royal-700 hover:bg-gray-100 shadow-lg">
                 En savoir plus sur l&apos;événement
               </Button>
             </Link>

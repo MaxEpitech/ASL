@@ -102,12 +102,12 @@ export default function PrestationsPage() {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="mailto:contact@asl-jeuxecossais.fr">
-                <Button className="bg-white text-forest hover:bg-gray-100 w-full sm:w-auto">
+                <Button className="bg-white text-forest-700 hover:bg-gray-100 shadow-lg w-full sm:w-auto">
                   Demander un devis
                 </Button>
               </a>
               <a href="/sponsoring">
-                <Button variant="outline" className="border-white text-white hover:bg-white hover:text-forest w-full sm:w-auto">
+                <Button variant="outline" className="border-white text-white hover:bg-white hover:text-forest-700 w-full sm:w-auto">
                   Devenir partenaire
                 </Button>
               </a>

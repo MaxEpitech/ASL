@@ -31,13 +31,13 @@ export default function HeroSection() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/evenement/luzarches-2025">
+          <Link href="/evenement/luzarches-2026">
             <Button size="lg" className="w-full sm:w-auto">
-              Billetterie 2025
+              Billetterie 2026
             </Button>
           </Link>
           <Link href="/prestations">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-royal">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-royal-700">
               Nos Prestations
             </Button>
           </Link>
