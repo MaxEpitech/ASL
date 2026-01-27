@@ -11,6 +11,7 @@ const services = [
     description: 'Démonstrations et initiations pour festivals, fêtes médiévales et événements municipaux.',
     href: '/prestations#demonstrations-publiques',
   },
+  
   {
     icon: Users,
     title: 'Corporate & Team Building',
