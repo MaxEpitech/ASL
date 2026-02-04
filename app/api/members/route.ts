@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 // GET - Liste des membres actifs pour la page publique
 export async function GET() {
     try {
