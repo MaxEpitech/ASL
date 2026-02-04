@@ -1,56 +1,59 @@
 import { Resend } from 'resend';
 
-if (!process.env.RESEND_API_KEY) {
+// Initialize Resend client lazily to avoid build-time errors
+const getResendClient = () => {
+  if (!process.env.RESEND_API_KEY) {
     throw new Error('RESEND_API_KEY is not defined in environment variables');
-}
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return new Resend(process.env.RESEND_API_KEY);
+};
 
 export interface SendEmailOptions {
-    to: string | string[];
-    subject: string;
-    html: string;
-    text?: string;
-    from?: string;
-    replyTo?: string;
+  to: string | string[];
+  subject: string;
+  html: string;
+  text?: string;
+  from?: string;
+  replyTo?: string;
 }
 
 /**
  * Send an email using Resend
  */
 export async function sendEmail(options: SendEmailOptions) {
-    const from = options.from || process.env.EMAIL_FROM || 'ASL Jeux Écossais <noreply@asl-jeuxecossais.fr>';
+  const from = options.from || process.env.EMAIL_FROM || 'ASL Jeux Écossais <noreply@asl-jeuxecossais.fr>';
 
-    try {
-        const { data, error } = await resend.emails.send({
-            from,
-            to: options.to,
-            subject: options.subject,
-            html: options.html,
-            text: options.text,
-            replyTo: options.replyTo,
-        });
+  try {
+    const resend = getResendClient();
+    const { data, error } = await resend.emails.send({
+      from,
+      to: options.to,
+      subject: options.subject,
+      html: options.html,
+      text: options.text,
+      replyTo: options.replyTo,
+    });
 
-        if (error) {
-            console.error('Error sending email:', error);
-            throw new Error(`Failed to send email: ${error.message}`);
-        }
-
-        return { success: true, data };
-    } catch (error) {
-        console.error('Exception sending email:', error);
-        throw error;
+    if (error) {
+      console.error('Error sending email:', error);
+      throw new Error(`Failed to send email: ${error.message}`);
     }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Exception sending email:', error);
+    throw error;
+  }
 }
 
 /**
  * Send contact confirmation email
  */
 export async function sendContactConfirmation(params: {
-    to: string;
-    name: string;
+  to: string;
+  name: string;
 }) {
-    const html = `
+  const html = `
     <!DOCTYPE html>
     <html>
       <head>
@@ -85,30 +88,30 @@ export async function sendContactConfirmation(params: {
     </html>
   `;
 
-    const text = `Merci pour votre message !\n\nBonjour ${params.name},\n\nNous avons bien reçu votre message et nous vous remercions de l'intérêt que vous portez à l'ASL Jeux Écossais.\n\nNotre équipe reviendra vers vous dans les plus brefs délais.\n\nÀ très bientôt,\nL'équipe ASL Jeux Écossais`;
+  const text = `Merci pour votre message !\n\nBonjour ${params.name},\n\nNous avons bien reçu votre message et nous vous remercions de l'intérêt que vous portez à l'ASL Jeux Écossais.\n\nNotre équipe reviendra vers vous dans les plus brefs délais.\n\nÀ très bientôt,\nL'équipe ASL Jeux Écossais`;
 
-    return sendEmail({
-        to: params.to,
-        subject: 'Confirmation de votre demande - ASL Jeux Écossais',
-        html,
-        text,
-    });
+  return sendEmail({
+    to: params.to,
+    subject: 'Confirmation de votre demande - ASL Jeux Écossais',
+    html,
+    text,
+  });
 }
 
 /**
  * Send sponsoring inquiry notification to admin
  */
 export async function sendSponsoringNotification(params: {
-    name: string;
-    company?: string;
-    email: string;
-    phone?: string;
-    tier?: string;
-    message: string;
+  name: string;
+  company?: string;
+  email: string;
+  phone?: string;
+  tier?: string;
+  message: string;
 }) {
-    const adminEmail = process.env.EMAIL_SPONSORING || 'sponsoring@asl-jeuxecossais.fr';
+  const adminEmail = process.env.EMAIL_SPONSORING || 'sponsoring@asl-jeuxecossais.fr';
 
-    const html = `
+  const html = `
     <!DOCTYPE html>
     <html>
       <head>
@@ -145,23 +148,23 @@ export async function sendSponsoringNotification(params: {
     </html>
   `;
 
-    return sendEmail({
-        to: adminEmail,
-        subject: `Nouvelle demande de partenariat${params.tier ? ` - ${params.tier}` : ''}`,
-        html,
-        replyTo: params.email,
-    });
+  return sendEmail({
+    to: adminEmail,
+    subject: `Nouvelle demande de partenariat${params.tier ? ` - ${params.tier}` : ''}`,
+    html,
+    replyTo: params.email,
+  });
 }
 
 /**
  * Send newsletter email
  */
 export async function sendNewsletterEmail(params: {
-    to: string | string[];
-    subject: string;
-    content: string;
+  to: string | string[];
+  subject: string;
+  content: string;
 }) {
-    const html = `
+  const html = `
     <!DOCTYPE html>
     <html>
       <head>
@@ -192,9 +195,9 @@ export async function sendNewsletterEmail(params: {
     </html>
   `;
 
-    return sendEmail({
-        to: params.to,
-        subject: params.subject,
-        html,
-    });
+  return sendEmail({
+    to: params.to,
+    subject: params.subject,
+    html,
+  });
 }
