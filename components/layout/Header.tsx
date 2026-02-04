@@ -9,7 +9,7 @@ import Container from '@/components/ui/Container';
 const navigation = [
   { name: 'Accueil', href: '/' },
   { name: 'Association', href: '/association' },
-  { name: 'Événement 2026', href: '/evenement/luzarches-2026' },
+  { name: 'Highland Games 2026', href: '/evenement/luzarches-2026' },
   { name: 'Prestations', href: '/prestations' },
   { name: 'Sponsoring', href: '/sponsoring' },
 ];

@@ -17,7 +17,7 @@ const packUpdateSchema = z.object({
 // PUT - Modifier un pack
 export async function PUT(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await auth();
@@ -26,12 +26,13 @@ export async function PUT(
             return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
         }
 
+        const { id } = await params;
         const body = await req.json();
         const validatedData = packUpdateSchema.parse(body);
 
         // Vérifier que le pack existe
         const existingPack = await prisma.sponsoringPack.findUnique({
-            where: { id: params.id },
+            where: { id },
         });
 
         if (!existingPack) {
@@ -62,7 +63,7 @@ export async function PUT(
         }
 
         const pack = await prisma.sponsoringPack.update({
-            where: { id: params.id },
+            where: { id },
             data: updateData,
         });
 
@@ -89,7 +90,7 @@ export async function PUT(
 // DELETE - Supprimer un pack
 export async function DELETE(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await auth();
@@ -98,9 +99,11 @@ export async function DELETE(
             return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
         }
 
+        const { id } = await params;
+
         // Vérifier que le pack existe
         const pack = await prisma.sponsoringPack.findUnique({
-            where: { id: params.id },
+            where: { id },
             include: {
                 _count: {
                     select: { sponsors: true },
@@ -126,7 +129,7 @@ export async function DELETE(
         }
 
         await prisma.sponsoringPack.delete({
-            where: { id: params.id },
+            where: { id },
         });
 
         return NextResponse.json({ success: true });

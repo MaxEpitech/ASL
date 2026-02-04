@@ -15,6 +15,45 @@ const UpdateBlogPostSchema = z.object({
     metaDescription: z.string().optional(),
 });
 
+export async function GET(
+    request: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        const session = await auth();
+
+        if (!session?.user) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        const { id } = await params;
+
+        const post = await prisma.blogPost.findUnique({
+            where: { id },
+            include: {
+                category: true,
+                tags: {
+                    include: {
+                        tag: true
+                    }
+                }
+            }
+        });
+
+        if (!post) {
+            return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+        }
+
+        return NextResponse.json({ post });
+    } catch (error) {
+        console.error('Error fetching post:', error);
+        return NextResponse.json(
+            { error: 'Failed to fetch post' },
+            { status: 500 }
+        );
+    }
+}
+
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }

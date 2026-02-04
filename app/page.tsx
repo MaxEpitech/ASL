@@ -40,7 +40,7 @@ export default function Home() {
         <Container>
           <FadeIn>
             <div className="text-center">
-              <h2 className="text-white mb-6">Événement Luzarches 2026</h2>
+              <h2 className="text-white mb-6">Highland Games de Luzarches 2026</h2>
               <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
                 Rejoignez-nous pour une journée inoubliable de Highland Games, 
                 compétitions traditionnelles et animations pour toute la famille !
@@ -62,7 +62,7 @@ export default function Home() {
               </div>
 
               <Link href="/evenement/luzarches-2026">
-                <Button className="bg-white text-royal-700 hover:bg-gray-100 shadow-lg">
+                <Button className="  hover:bg-gray-100 shadow-lg">
                   En savoir plus sur l&apos;événement
                 </Button>
               </Link>

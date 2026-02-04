@@ -33,7 +33,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
 
           <Link href="/prestations">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-royal-700">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white/10 backdrop-blur-sm border-white text-white hover:text-royal-700">
               Nos Prestations
             </Button>
           </Link>
