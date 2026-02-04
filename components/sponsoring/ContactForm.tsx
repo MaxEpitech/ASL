@@ -40,9 +40,22 @@ export default function ContactForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // TODO: Implement actual email sending via API route
-    // For now, simulate submission
-    setTimeout(() => {
+    // Implement actual email sending via API route
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Une erreur est survenue lors de l\'envoi du message');
+      }
+
       setIsSubmitting(false);
       setIsSubmitted(true);
       
@@ -58,7 +71,14 @@ export default function ContactForm() {
           message: '',
         });
       }, 3000);
-    }, 1000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setIsSubmitting(false);
+      setErrors({
+        ...errors,
+        submit: 'Une erreur est survenue. Veuillez réessayer plus tard.',
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
