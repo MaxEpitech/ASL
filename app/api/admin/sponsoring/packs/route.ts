@@ -30,7 +30,7 @@ export async function GET() {
         });
 
         // Parse benefits JSON
-        const packsWithBenefits = packs.map((pack) => ({
+        const packsWithBenefits = packs.map((pack: any) => ({
             ...pack,
             benefits: typeof pack.benefits === 'string' ? JSON.parse(pack.benefits) : pack.benefits,
             sponsorCount: pack._count.sponsors,
@@ -95,10 +95,10 @@ export async function POST(req: NextRequest) {
             ...pack,
             benefits: JSON.parse(pack.benefits as string),
         });
-    } catch (error) {
+    } catch (error: any) {
         if (error instanceof z.ZodError) {
             return NextResponse.json(
-                { error: 'Données invalides', details: error.errors },
+                { error: 'Données invalides', details: error.issues },
                 { status: 400 }
             );
         }

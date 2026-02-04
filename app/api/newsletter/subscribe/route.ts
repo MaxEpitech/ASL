@@ -67,10 +67,10 @@ export async function POST(request: NextRequest) {
             { success: true, message: 'Inscription réussie' },
             { status: 200 }
         );
-    } catch (error) {
+    } catch (error: any) {
         if (error instanceof z.ZodError) {
             return NextResponse.json(
-                { error: 'Données invalides', details: error.errors },
+                { error: 'Données invalides', details: error.issues },
                 { status: 400 }
             );
         }

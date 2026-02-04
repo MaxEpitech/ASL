@@ -92,10 +92,10 @@ export async function POST(req: NextRequest) {
         });
 
         return NextResponse.json(sponsor);
-    } catch (error) {
+    } catch (error: any) {
         if (error instanceof z.ZodError) {
             return NextResponse.json(
-                { error: 'Données invalides', details: error.errors },
+                { error: 'Données invalides', details: error.issues },
                 { status: 400 }
             );
         }

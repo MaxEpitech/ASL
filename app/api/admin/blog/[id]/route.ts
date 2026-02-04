@@ -79,7 +79,7 @@ export async function PUT(
         });
 
         return NextResponse.json({ post });
-    } catch (error) {
+    } catch (error: any) {
         if (error instanceof z.ZodError) {
             return NextResponse.json(
                 { error: 'Invalid input', details: error.issues },

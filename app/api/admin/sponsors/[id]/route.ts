@@ -15,7 +15,7 @@ const sponsorUpdateSchema = z.object({
 // PUT - Modifier un sponsor
 export async function PUT(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await auth();
@@ -24,12 +24,13 @@ export async function PUT(
             return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
         }
 
+        const { id } = await params;
         const body = await req.json();
         const validatedData = sponsorUpdateSchema.parse(body);
 
         // Vérifier que le sponsor existe
         const existingSponsor = await prisma.sponsor.findUnique({
-            where: { id: params.id },
+            where: { id },
         });
 
         if (!existingSponsor) {
@@ -54,7 +55,7 @@ export async function PUT(
         }
 
         const sponsor = await prisma.sponsor.update({
-            where: { id: params.id },
+            where: { id },
             data: validatedData,
             include: {
                 pack: {
@@ -68,10 +69,10 @@ export async function PUT(
         });
 
         return NextResponse.json(sponsor);
-    } catch (error) {
+    } catch (error: any) {
         if (error instanceof z.ZodError) {
             return NextResponse.json(
-                { error: 'Données invalides', details: error.errors },
+                { error: 'Données invalides', details: error.issues },
                 { status: 400 }
             );
         }
@@ -87,7 +88,7 @@ export async function PUT(
 // DELETE - Supprimer un sponsor
 export async function DELETE(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await auth();
@@ -96,9 +97,11 @@ export async function DELETE(
             return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
         }
 
+        const { id } = await params;
+
         // Vérifier que le sponsor existe
         const sponsor = await prisma.sponsor.findUnique({
-            where: { id: params.id },
+            where: { id },
         });
 
         if (!sponsor) {
@@ -109,7 +112,7 @@ export async function DELETE(
         }
 
         await prisma.sponsor.delete({
-            where: { id: params.id },
+            where: { id },
         });
 
         return NextResponse.json({ success: true });

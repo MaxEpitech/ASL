@@ -13,7 +13,7 @@ async function main() {
     await prisma.blogCategory.deleteMany();
     await prisma.sponsor.deleteMany();
     await prisma.sponsoringPack.deleteMany();
-    await prisma.boardMember.deleteMany();
+    // await prisma.boardMember.deleteMany(); // Removed as model no longer exists
     await prisma.member.deleteMany();
     await prisma.emailTemplate.deleteMany();
     await prisma.newsletterSubscriber.deleteMany();
@@ -192,12 +192,9 @@ async function main() {
             bio: 'Président de l\'ASL depuis 2020, passionné de jeux écossais depuis plus de 15 ans.',
             active: true,
             order: 1,
-            boardMember: {
-                create: {
-                    role: 'Président',
-                    order: 1,
-                },
-            },
+            isBoardMember: true,
+            role: 'president', // Using new enum/string values
+            position: 'Président',
         },
     });
 
@@ -209,12 +206,9 @@ async function main() {
             bio: 'Trésorière de l\'ASL, gère les finances de l\'association avec rigueur.',
             active: true,
             order: 2,
-            boardMember: {
-                create: {
-                    role: 'Trésorière',
-                    order: 2,
-                },
-            },
+            isBoardMember: true,
+            role: 'treasurer',
+            position: 'Trésorière',
         },
     });
 
