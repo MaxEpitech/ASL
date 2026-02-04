@@ -27,8 +27,8 @@ export async function GET() {
         });
 
         // Séparer membres du bureau et membres actifs
-        const boardMembers = members.filter((m) => m.isBoardMember);
-        const activeMembers = members.filter((m) => !m.isBoardMember);
+        const boardMembers = members.filter((m: any) => m.isBoardMember);
+        const activeMembers = members.filter((m: any) => !m.isBoardMember);
 
         return NextResponse.json({
             boardMembers,
