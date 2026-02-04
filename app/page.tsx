@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button';
 import MediaGallery from '@/components/ui/MediaGallery';
 import Countdown from '@/components/ui/Countdown';
 import FadeIn from '@/components/animations/FadeIn';
+import { SponsorsSlider } from '@/components/sponsors/SponsorsSlider';
 import Link from 'next/link';
 import { Calendar, MapPin } from 'lucide-react';
 import { homeGalleryImages } from '@/data/media';
@@ -66,6 +67,21 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
+          </FadeIn>
+        </Container>
+      </Section>
+
+      {/* Sponsors Section */}
+      <Section background="gray">
+        <Container>
+          <FadeIn>
+            <div className="text-center mb-12">
+              <h2 className="text-royal mb-4">Nos Partenaires</h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Ils nous font confiance et soutiennent nos événements
+              </p>
+            </div>
+            <SponsorsSlider />
           </FadeIn>
         </Container>
       </Section>

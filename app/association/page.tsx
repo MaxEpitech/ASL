@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Section from '@/components/ui/Section';
 import Container from '@/components/ui/Container';
 import { Shield, Users, Award, Heart } from 'lucide-react';
+import { MembersList } from '@/components/association/MembersList';
 
 export const metadata: Metadata = {
   title: 'Association',
@@ -98,22 +99,7 @@ export default function AssociationPage() {
               Une équipe passionnée et dévouée à la promotion des Highland Games
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Team members - Placeholder for actual team */}
-              {[
-                { role: 'Président', name: 'À venir' },
-                { role: 'Responsable Événements', name: 'À venir' },
-                { role: 'Responsable Compétitions', name: 'À venir' },
-              ].map((member, index) => (
-                <div key={index} className="bg-white rounded-lg p-6 shadow-md text-center">
-                  <div className="w-32 h-32 bg-gradient-to-br from-royal to-forest rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <Users className="w-16 h-16 text-white" />
-                  </div>
-                  <h3 className="text-xl font-serif font-bold mb-2">{member.role}</h3>
-                  <p className="text-gray-600">{member.name}</p>
-                </div>
-              ))}
-            </div>
+            <MembersList />
 
             <div className="mt-12 bg-royal/5 rounded-lg p-8 text-center">
               <h3 className="text-2xl font-serif font-bold mb-4 text-royal">Rejoignez-nous !</h3>

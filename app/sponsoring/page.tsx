@@ -22,9 +22,8 @@ export default function SponsoringPage() {
         <Container>
           <div className="text-center text-white">
             <h1 className="mb-6">Devenez Partenaire</h1>
-            <p className="text-xl md:text-2xl max-w-4xl mx-auto">
+            <p className="text-xl md:text-2xl max-w-5xl mx-auto">
               Soutenez notre association et gagnez en visibilité auprès de milliers de visiteurs. 
-              Profitez d&apos;une déduction fiscale de 60% sur votre contribution.
             </p>
           </div>
         </Container>
